@@ -51,6 +51,7 @@ class IntroductionTest {
     @Order(3)
     @DisplayName("encodeMessage returns correct encoded message")
     @SneakyThrows
+    @Disabled
     void encodeMessageReturnsCorrectPhrase() {
         var encodeMessageMethod = Arrays.stream(Introduction.class.getDeclaredMethods())
                 .filter(method -> method.getName().equals("encodeMessage"))
