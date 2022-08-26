@@ -5,10 +5,7 @@ import com.bobocode.util.ExerciseNotCompletedException;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * {@link CrazyGenerics} is an exercise class. It consists of classes, interfaces and methods that should be updated
@@ -160,7 +157,7 @@ public class CrazyGenerics {
          *
          * @param list
          */
-        public static void print(List<Integer> list) {
+        public static void print(List<?> list) {
             // todo: refactor it so the list of any type can be printed, not only integers
             list.forEach(element -> System.out.println(" – " + element));
         }
@@ -173,8 +170,13 @@ public class CrazyGenerics {
          * @param entities provided collection of entities
          * @return true if at least one of the elements has null id
          */
-        public static boolean hasNewEntities(Collection<BaseEntity> entities) {
-            throw new ExerciseNotCompletedException(); // todo: refactor parameter and implement method
+        public static boolean hasNewEntities(Collection<? extends BaseEntity> entities) {
+            for(BaseEntity entity : entities){
+                if (entity.getUuid() == null){
+                    return true;
+                }
+            }
+            return false;
         }
 
         /**
