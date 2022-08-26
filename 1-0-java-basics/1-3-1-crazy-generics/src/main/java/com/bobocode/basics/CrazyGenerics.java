@@ -4,8 +4,10 @@ import com.bobocode.basics.util.BaseEntity;
 import com.bobocode.util.ExerciseNotCompletedException;
 import lombok.Data;
 
+import javax.xml.validation.Validator;
 import java.io.Serializable;
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * {@link CrazyGenerics} is an exercise class. It consists of classes, interfaces and methods that should be updated
@@ -188,8 +190,15 @@ public class CrazyGenerics {
          * @param validationPredicate criteria for validation
          * @return true if all entities fit validation criteria
          */
-        public static boolean isValidCollection() {
-            throw new ExerciseNotCompletedException(); // todo: add method parameters and implement the logic
+        public static boolean isValidCollection(Collection<? extends BaseEntity> entities,
+                                                Predicate<? super BaseEntity> validationPredicate) {
+            
+            for(BaseEntity entity : entities){
+                if(validationPredicate.test(entity)){
+                    return true;
+                }
+            }
+            return false;
         }
 
         /**
