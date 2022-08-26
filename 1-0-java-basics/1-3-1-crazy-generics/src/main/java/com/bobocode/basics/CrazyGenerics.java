@@ -144,7 +144,7 @@ public class CrazyGenerics {
         
         @Override
         default int compareTo(Collection<?> collection){
-            return collection.size() ;
+            return Integer.compare(this.size(), collection.size()) ;
         }
         // todo: refactor it to make generic and provide a default impl of compareTo
     }
