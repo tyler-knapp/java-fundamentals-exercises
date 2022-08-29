@@ -206,17 +206,24 @@ public class CrazyGenerics {
          * @param <T>          entity type
          * @return true if entities list contains target entity more than once
          */
-        public static <T extends BaseEntity> boolean hasDuplicates(List<BaseEntity> entities, BaseEntity targetEntity) {
+        public static <T extends BaseEntity> boolean hasDuplicates(Collection<BaseEntity> entities, T targetEntity) {
             int count =0;
-            for(int i =0; i < entities.size(); i++){
-                if(entities.get(i).getUuid().equals(targetEntity.getUuid())){
+            for (BaseEntity entity : entities) {
+                if (entity.getUuid().equals(targetEntity.getUuid())) {
                     count += 1;
                 }
-            }if(count > 1){
-                return true;
             }
-            return false;
+            return count > 1;
+        }
+            
+            /*
+            ***This is an alternative way to answer this problem.***
+             public static <T extends BaseEntity> boolean hasDuplicates(Collection<T> entities, T targetEntity) {
+                return entities.stream()
+                    .filter(e -> e.getUuid().equals(targetEntity.getUuid()))
+                    .count() > 1;
             }
+             */
             
 
         /**
@@ -229,6 +236,10 @@ public class CrazyGenerics {
          * @return optional max value
          */
         // todo: create a method and implement its logic manually without using util method from JDK
+        public static <T extends Iterable<T> & Comparator<T>> Optional<T> findMax(Iterable<T> elements, Comparator<T> comparator){
+            System.out.println(elements.iterator());
+            return Optional.empty();
+        }
 
         /**
          * findMostRecentlyCreatedEntity is a generic util method that accepts a collection of entities and returns the
