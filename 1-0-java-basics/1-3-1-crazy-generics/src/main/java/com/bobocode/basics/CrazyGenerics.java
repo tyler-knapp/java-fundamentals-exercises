@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.xml.validation.Validator;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -192,13 +193,7 @@ public class CrazyGenerics {
          */
         public static boolean isValidCollection(Collection<? extends BaseEntity> entities,
                                                 Predicate<? super BaseEntity> validationPredicate) {
-            
-            for(BaseEntity entity : entities){
-                if(validationPredicate.test(entity)){
-                    return true;
-                }
-            }
-            return false;
+            return entities.stream().allMatch(validationPredicate);
         }
 
         /**
@@ -211,9 +206,18 @@ public class CrazyGenerics {
          * @param <T>          entity type
          * @return true if entities list contains target entity more than once
          */
-        public static boolean hasDuplicates() {
-            throw new ExerciseNotCompletedException(); // todo: update method signature and implement it
-        }
+        public static <T extends BaseEntity> boolean hasDuplicates(List<BaseEntity> entities, BaseEntity targetEntity) {
+            int count =0;
+            for(int i =0; i < entities.size(); i++){
+                if(entities.get(i).getUuid().equals(targetEntity.getUuid())){
+                    count += 1;
+                }
+            }if(count > 1){
+                return true;
+            }
+            return false;
+            }
+            
 
         /**
          * findMax is a generic util method that accepts an {@link Iterable} and {@link Comparator} and returns an
